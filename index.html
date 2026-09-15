@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LA CASA | Attendance Control</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="noise"></div>
+  <main class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#top" aria-label="La Casa Control home">
+        <span class="brand-mark">◢</span><span>LA CASA</span><em>CONTROL</em>
+      </a>
+      <nav>
+        <a class="active" href="#top"><span>▦</span> Command center</a>
+        <a href="#logs"><span>◷</span> Attendance logs</a>
+        <a href="#export"><span>⇩</span> Data vault</a>
+      </nav>
+      <div class="side-bottom">
+        <div class="system-status"><i></i><span>System online</span></div>
+        <p>SECURE TERMINAL<br><b>12 / 09 / 24</b></p>
+      </div>
+    </aside>
+
+    <section class="content" id="top">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">OPERATION 07 — PERSONNEL TRACKING</p>
+          <h1>Good morning, <span>Professor.</span></h1>
+        </div>
+        <div class="top-actions">
+          <div class="clock"><span id="liveTime">--:--:--</span><small id="liveDate">-- --- ----</small></div>
+          <button class="theme-toggle" id="themeToggle" aria-label="Switch color theme"><span class="sun">☼</span><span class="toggle-dot"></span><span class="moon">☾</span></button>
+          <div class="avatar">P</div>
+        </div>
+      </header>
+
+      <section class="stats-grid">
+        <article class="stat-card"><span class="stat-icon red">⌁</span><div><p>ON SITE NOW</p><strong id="onsiteCount">24</strong><small><b>+3</b> since 08:00</small></div></article>
+        <article class="stat-card"><span class="stat-icon white">✓</span><div><p>MARKED PRESENT</p><strong id="presentCount">36</strong><small>of 42 expected</small></div></article>
+        <article class="stat-card"><span class="stat-icon outlined">◷</span><div><p>AVERAGE ARRIVAL</p><strong>08:47</strong><small>12 mins earlier</small></div></article>
+        <article class="stat-card alert-card"><span class="stat-icon muted">!</span><div><p>AWAITING CHECK-IN</p><strong id="pendingCount">06</strong><small>Require attention</small></div></article>
+      </section>
+
+      <section class="capture-layout">
+        <article class="scanner-card">
+          <div class="card-title"><div><p class="eyebrow">BIOMETRIC GATE</p><h2>Face verification</h2></div><span class="secure-pill"><i></i> SECURE</span></div>
+          <div class="camera-stage" id="cameraStage">
+            <video id="camera" autoplay muted playsinline></video>
+            <div class="camera-placeholder" id="cameraPlaceholder"><div class="face-outline"><span></span><span></span><span></span><span></span></div><p>CAMERA STANDBY</p><small>Position face within frame</small></div>
+            <div class="scan-lines"></div><div class="corner tl"></div><div class="corner tr"></div><div class="corner bl"></div><div class="corner br"></div>
+            <div class="camera-label">CAM 01 <i></i> LIVE</div>
+            <div class="scan-result" id="scanResult"></div>
+          </div>
+          <div class="identity-row"><label for="employeeName">IDENTITY</label><input id="employeeName" maxlength="30" placeholder="Enter operative name" value="Tokyo" /><button id="startCamera" class="ghost-btn">Enable camera</button></div>
+          <div class="capture-buttons"><button id="entryBtn" class="action-btn entry"><span>↳</span> Mark entry</button><button id="exitBtn" class="action-btn exit"><span>↱</span> Mark exit</button></div>
+          <p class="capture-note">By continuing, the operative confirms their biometric identity.</p>
+        </article>
+
+        <aside class="briefing-card">
+          <div class="card-title"><div><p class="eyebrow">TODAY'S BRIEFING</p><h2>Operation status</h2></div><span class="more">•••</span></div>
+          <div class="progress-ring"><div class="ring"><strong id="ringPercentage">86%</strong><span>CHECKED IN</span></div></div>
+          <div class="progress-key"><span><i class="red-dot"></i> Present <b id="presentKey">36</b></span><span><i class="gray-dot"></i> Pending <b id="pendingKey">06</b></span></div>
+          <div class="divider"></div>
+          <h3>RECENT ACTIVITY</h3>
+          <ul class="activity-list" id="activityList">
+            <li><span class="mini-avatar red-avatar">B</span><div><b>Berlin</b><small>Entered the premises</small></div><time>09:12</time></li>
+            <li><span class="mini-avatar dark-avatar">N</span><div><b>Nairobi</b><small>Checked out</small></div><time>09:04</time></li>
+            <li><span class="mini-avatar white-avatar">D</span><div><b>Denver</b><small>Entered the premises</small></div><time>08:58</time></li>
+          </ul>
+          <button class="full-log-link" onclick="document.getElementById('logs').scrollIntoView({behavior:'smooth'})">View full log <span>→</span></button>
+        </aside>
+      </section>
+
+      <section class="logs-section" id="logs">
+        <div class="section-heading"><div><p class="eyebrow">PERSONNEL ARCHIVE</p><h2>Attendance log</h2></div><div class="log-tools"><label class="search"><span>⌕</span><input id="searchInput" placeholder="Search operative" /></label><button id="exportBtn" class="export-btn"><span>⇩</span> Export CSV</button></div></div>
+        <div class="table-wrap"><table><thead><tr><th>OPERATIVE</th><th>DATE</th><th>ENTRY</th><th>EXIT</th><th>STATUS</th></tr></thead><tbody id="logBody"></tbody></table></div>
+      </section>
+    </section>
+  </main>
+  <div class="toast" id="toast"><span>✓</span><div><b id="toastTitle">Access confirmed</b><small id="toastText">Attendance has been updated.</small></div><button id="closeToast">×</button></div>
+  <script src="app.js"></script>
+</body>
+</html>
